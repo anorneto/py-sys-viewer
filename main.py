@@ -3,7 +3,7 @@ from pathlib import Path
 
 CURRENT_DIR: Path = Path(__file__).parent
 
-from domain.dto.sensor import Sensor
+from domain.dto import Sensor, Hardware
 
 
 def initialize_librehardwaremonitor():
@@ -33,12 +33,12 @@ def initialize_librehardwaremonitor():
 def fetch_stats(handle):
     for hardware in handle.Hardware:
         hardware.Update()
-        print(f"Hardware: {hardware.Name} - Type: {hardware.HardwareType}")
+        print(Hardware.from_libremonitor_hardware(hardware))
         for sensor in hardware.Sensors:
             parse_sensor(sensor)
         for sub_hardware in hardware.SubHardware:
             sub_hardware.Update()
-            print(f"SubHardware: {sub_hardware.Name}")
+            print(Hardware.from_libremonitor_hardware(sub_hardware))
             for subsensor in sub_hardware.Sensors:
                 parse_sensor(subsensor)
 

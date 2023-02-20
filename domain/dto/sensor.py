@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Any, Dict, List
 from dataclasses import dataclass, field
-from helpers.constants import LIBREMONITOR_DLL_NAMESPACE
+from helpers.constants import GlobalConstants
 
 
 class SensorTypeUnitEnum(Enum):
@@ -14,7 +14,7 @@ class SensorTypeUnitEnum(Enum):
     Flow = "L/h"
     Control = "%"
     Level = "%"
-    Factor = "1"
+    Factor = " * 1"
     Power = "W"
     Data = "GB"
     SmallData = "MB"
@@ -26,17 +26,17 @@ class SensorTypeUnitEnum(Enum):
 
 @dataclass
 class Sensor:
+    identifier: str  # todo -> check this class
     index: int
     name: str
-    identifier: str  # todo -> check this class
-    type: str
+    type: SensorTypeUnitEnum
     max: float | None
     min: float | None
     value: float | None
 
     @property
     def unit(self) -> str:
-        return SensorTypeUnitEnum[self.type].value
+        return self.type.value
 
     @property
     def value_with_unit(self) -> str:
@@ -44,17 +44,18 @@ class Sensor:
 
     @classmethod
     def from_libremonitor_sensor(cls, libremonitor_sensor) -> "Sensor":
-        if (
-            libremonitor_sensor.GetType().FullName
-            != f"{LIBREMONITOR_DLL_NAMESPACE}.Hardware.Sensor"
-        ):
+        if type(libremonitor_sensor).__name__ != f"ISensor":
             raise ValueError("Not a Sensor")
 
+        sensor_type: SensorTypeUnitEnum = SensorTypeUnitEnum[
+            str(libremonitor_sensor.SensorType)
+        ]
+
         sensor: Sensor = Sensor(
+            identifier=str(libremonitor_sensor.Identifier),
             index=libremonitor_sensor.Index,
             name=libremonitor_sensor.Name,
-            identifier=str(libremonitor_sensor.Identifier),
-            type=str(libremonitor_sensor.SensorType),
+            type=sensor_type,
             max=libremonitor_sensor.Max,
             min=libremonitor_sensor.Min,
             value=libremonitor_sensor.Value,
@@ -63,4 +64,4 @@ class Sensor:
         return sensor
 
     def __repr__(self) -> str:
-        return f"{self.index} | {self.name} - {self.value_with_unit}"
+        return f"{self.type.name} | {self.index} | {self.name} - {self.value_with_unit}"
