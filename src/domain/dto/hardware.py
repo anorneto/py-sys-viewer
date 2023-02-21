@@ -1,7 +1,7 @@
 from typing import List
 from dataclasses import dataclass, field
 from .sensor import Sensor
-from common.constants import GlobalConstants
+from src.common.constants import GlobalConstants
 from enum import StrEnum, auto
 
 

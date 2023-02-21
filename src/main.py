@@ -1,7 +1,7 @@
 import clr  # package pythonnet, not clr
 
-from domain.dto import Sensor, Hardware
-from common.constants import DLLS_FILE_LOCATION_DICT
+from .domain.dto import Sensor, Hardware
+from .common.constants import DLLS_FILE_LOCATION_DICT
 
 
 def initialize_librehardwaremonitor():

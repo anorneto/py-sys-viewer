@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Any, Dict, List
 from dataclasses import dataclass, field
-from common.constants import GlobalConstants
+from src.common.constants import GlobalConstants
 
 
 class SensorTypeUnitEnum(Enum):
