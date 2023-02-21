@@ -1,22 +1,14 @@
 import clr  # package pythonnet, not clr
-from pathlib import Path
-
-CURRENT_DIR: Path = Path(__file__).parent
 
 from domain.dto import Sensor, Hardware
+from common.constants import DLLS_FILE_LOCATION_DICT
 
 
 def initialize_librehardwaremonitor():
-    libehardwaremonitor_dll = CURRENT_DIR.joinpath(
-        "helpers/dlls/LibreHardwareMonitorLib.dll"
-    ).as_posix()
-    hidsharp_dll = CURRENT_DIR.joinpath(
-        "helpers/dlls/HidSharp.dll"
-    ).as_posix()  # if this is not added libre hardware fails
-    clr.AddReference(libehardwaremonitor_dll)
-    clr.AddReference(hidsharp_dll)
+    for key, value in DLLS_FILE_LOCATION_DICT.items():
+        clr.AddReference(value)
 
-    from LibreHardwareMonitor import Hardware
+    from LibreHardwareMonitor import Hardware  # noqa
 
     handle = Hardware.Computer()
     handle.IsMotherboardEnabled = True

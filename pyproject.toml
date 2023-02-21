@@ -10,6 +10,7 @@ packages = [{include = "py_sys_viewer"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 psutil = "^5.9.4"
+structlog = "^22.3.0"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.1.0"

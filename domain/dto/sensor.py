@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Any, Dict, List
 from dataclasses import dataclass, field
-from helpers.constants import GlobalConstants
+from common.constants import GlobalConstants
 
 
 class SensorTypeUnitEnum(Enum):
@@ -14,7 +14,7 @@ class SensorTypeUnitEnum(Enum):
     Flow = "L/h"
     Control = "%"
     Level = "%"
-    Factor = " * 1"
+    Factor = "* 1"
     Power = "W"
     Data = "GB"
     SmallData = "MB"
