@@ -36,4 +36,4 @@ class Hardware:
             self.sensors = []
 
     def __repr__(self) -> str:
-        return f"> {self.name} - {self.type}"
+        return f"{self.name} - {self.type}"
