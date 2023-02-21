@@ -2,6 +2,10 @@ import clr  # package pythonnet, not clr
 
 from .domain.dto import Sensor, Hardware
 from .common.constants import DLLS_FILE_LOCATION_DICT
+from .infrastructure.adapter.libremonitor import (
+    LibreSensorAdapter,
+    LibreHardwareAdapter,
+)
 
 
 def initialize_librehardwaremonitor():
@@ -25,18 +29,18 @@ def initialize_librehardwaremonitor():
 def fetch_stats(handle):
     for hardware in handle.Hardware:
         hardware.Update()
-        print(Hardware.from_libremonitor_hardware(hardware))
+        print(LibreHardwareAdapter.from_libremonitor_hardware(hardware))
         for sensor in hardware.Sensors:
             parse_sensor(sensor)
         for sub_hardware in hardware.SubHardware:
             sub_hardware.Update()
-            print(Hardware.from_libremonitor_hardware(sub_hardware))
+            print(LibreHardwareAdapter.from_libremonitor_hardware(sub_hardware))
             for subsensor in sub_hardware.Sensors:
                 parse_sensor(subsensor)
 
 
 def parse_sensor(sensor):
-    print(Sensor.from_libremonitor_sensor(sensor))
+    print(LibreSensorAdapter.from_libremonitor_sensor(sensor))
     return
     if sensor.Value is not None:
         if type(sensor).__module__ == "LibreHardwareMonitor.Hardware":
