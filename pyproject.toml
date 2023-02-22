@@ -11,12 +11,14 @@ packages = [{include = "py_sys_viewer"}]
 python = "^3.11"
 psutil = "^5.9.4"
 structlog = "^22.3.0"
+textual = "^0.11.1"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.1.0"
 bandit = "^1.7.4"
 pytest = "^7.2.1"
 mypy = "^1.0.1"
+textual = {extras = ["dev"], version = "^0.11.1"}
 
 [build-system]
 requires = ["poetry-core"]
